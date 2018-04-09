@@ -1,0 +1,7 @@
+.ivu-form-inline {
+    text-align: right;
+    padding: 10px 10px;
+}
+.ivu-form-inline .ivu-form-item {
+    margin: 0px 0px !important;
+}
