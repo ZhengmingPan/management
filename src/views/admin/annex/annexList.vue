@@ -74,14 +74,8 @@
                                         marginRight: '5px'
                                     },
                                     on: {
-                                        click: () => { 
-                                                if(params.row.fastdfsUrl) {
-                                                  window.open(params.row.fastdfsUrl);
-                                                } else {
-                                                  window.open('/home/api/annex/download/' + params.row.path);
-                                                }
-                                        	//location.href = '/home/api/annex/download/' + params.row.path;
-                                                //window.open(params.row.fastdfsUrl)
+                                        click: () => {  
+                                           window.open('/home/api/annex/download/' + params.row.path); 
                                         }
                                     }
                                 }, '下载'),
