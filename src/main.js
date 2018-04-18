@@ -14,12 +14,13 @@ import homeApis from '@/apis/home.js';
 //import 'iview/dist/styles/iview.css';
 import '@/static/themes/default.less';
 import 'font-awesome/css/font-awesome.css';
- 
+
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
 Vue.use(iView);
 Vue.use(iViewArea);
+ 
 
 // 将API方法绑定到全局
 Vue.prototype.$http = Http;

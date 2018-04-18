@@ -118,6 +118,9 @@
     import AdminMenu from './menu-admin.js';
     import MailMenu from './menu-mail.js';
 
+    import SockJs from 'sockjs-client';
+    var Stomp = require('stompjs');
+
     export default {
         data() {
            return {
@@ -126,7 +129,8 @@
               isCollapsed: false,
               username: '',
               avatar: this.$Img.avatar,
-              menuItems: AdminMenu
+              menuItems: AdminMenu,
+              stompClient: null
            };
         },
         computed: {
@@ -142,6 +146,15 @@
         },
         created() {
           this.refresh();
+          var vm = this;
+          this.stompClient = Stomp.over(new SockJs('http://localhost:9000/home/homeWs'));
+          this.stompClient.connect({}, (frame) => {
+            console.log("Connected: " + frame);
+            vm.stompClient.subscribe('/topic/getResponse', (response) => { 
+              console.log("Result:  " + response.body)
+            });
+          });
+
         },
         methods: {
            refresh() {
@@ -206,6 +219,7 @@
              }
            },
            topMenuTo(name){
+            this.stompClient.send("/welcome",{});
             var vm = this;
             if(name == 'logout') {
               this.$http.post('/home/api/account/logout',{} , (result, headers) => {
