@@ -49,7 +49,7 @@ var routers = [{
         component: EmptyParent,
         meta: {
             title: '用户管理'
-        },
+        }, 
         children:[{
             path: '',
             meta: {

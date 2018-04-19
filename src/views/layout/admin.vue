@@ -81,8 +81,15 @@
         </Menu>
       </Sider>
       <Layout>
-        <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)', height: '59px'}">
-          <Menu :active-name="topActiveName" mode="horizontal"  @on-select="topMenuTo">
+        <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)', height: '59px', padding: '0 20px'}">
+          <Menu :active-name="topActiveName" mode="horizontal" @on-select="topMenuTo">
+            <Breadcrumb style="float:left;">
+                <BreadcrumbItem>
+                    <Icon type="filing"></Icon>
+                    文件管理
+                </BreadcrumbItem>
+                <BreadcrumbItem>文件列表</BreadcrumbItem>
+            </Breadcrumb>
             <div class="layout-nav">
               <Submenu>
                 <template slot="title">
@@ -159,6 +166,7 @@
         },
         methods: {
            refresh() {
+             console.log(this.$route);
             if(this.$route.path.indexOf('/admin/') >= 0) {
                 this.menuItems = AdminMenu;
                 this.topActiveName = 'AdminMenu';
