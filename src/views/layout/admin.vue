@@ -82,7 +82,7 @@
       </Sider>
       <Layout>
         <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)', height: '59px'}">
-          <Menu mode="horizontal"  @on-select="topMenuTo">
+          <Menu :active-name="topActiveName" mode="horizontal"  @on-select="topMenuTo">
             <div class="layout-nav">
               <Submenu>
                 <template slot="title">
@@ -126,6 +126,7 @@
            return {
               openNames: [''],
               activeName: '',
+              topActiveName: '',
               isCollapsed: false,
               username: '',
               avatar: this.$Img.avatar,
@@ -150,7 +151,7 @@
           this.stompClient = Stomp.over(new SockJs('http://localhost:9000/home/homeWs'));
           this.stompClient.connect({}, (frame) => {
             console.log("Connected: " + frame);
-            vm.stompClient.subscribe('/topic/getResponse', (response) => { 
+            vm.stompClient.subscribe('/topic/getResponse', (response) => {
               console.log("Result:  " + response.body)
             });
           });
@@ -160,8 +161,10 @@
            refresh() {
             if(this.$route.path.indexOf('/admin/') >= 0) {
                 this.menuItems = AdminMenu;
+                this.topActiveName = 'AdminMenu';
             } else if(this.$route.path.indexOf('/mail/') >= 0) {
                 this.menuItems = MailMenu;
+                this.topActiveName = 'MailMenu'
             }
             this.$nextTick(() => {
                this.$refs.leftMenu.updateOpened();
