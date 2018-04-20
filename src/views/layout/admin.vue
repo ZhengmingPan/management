@@ -83,23 +83,11 @@
       <Layout>
         <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)', height: '59px', padding: '0 20px'}">
           <Menu :active-name="topActiveName" mode="horizontal" @on-select="topMenuTo">
-
               <Breadcrumb style="float:left;">
-                 <BreadcrumbItem  v-for="item in breakcrumbItems" :key="item.name">
+                 <BreadcrumbItem  v-for="item in breakcrumbItems" :href="item.path" :key="item.name">
                    {{item.title}}
                  </BreadcrumbItem>
               </Breadcrumb>
-            <!--
-            <Breadcrumb style="float:left;">
-               <BreadcrumbItem>
-                 <Icon type="home"></Icon>
-                 用户管理
-               </BreadcrumbItem>
-               <BreadcrumbItem>
-                用户列表
-               </BreadcrumbItem>
-            </Breadcrumb>
-            -->
              <div class="layout-nav">
               <Submenu>
                 <template slot="title">
@@ -187,7 +175,7 @@
             this.$nextTick(() => {
                this.$refs.leftMenu.updateOpened();
                this.$refs.leftMenu.updateActiveName();
-            });
+             });
             let currentPage = this.$route.meta.menu;
             let openName = '';
             if(currentPage) {
@@ -220,7 +208,6 @@
            },
            loadBreakCrumb() {
                let matcheds = this.$route.matched;
-               console.log(matcheds);
                let breakcrumbs = [];
                for(let index=0;index < matcheds.length; index++) {
                  if(matcheds[index].meta && matcheds[index].meta.title) {
@@ -232,9 +219,9 @@
                  }
                }
               this.breakcrumbItems = breakcrumbs;
-              console.log(this.breakcrumbItems);
            },
            menuSelect(name) {
+             this.loadBreakCrumb();
              if(name) {
                if(name.indexOf("-") == name.length - 1) {
                  return false;
@@ -246,16 +233,15 @@
                }
                if(this.menuItems === AdminMenu ) {
                  this.$router.push({path: "/admin/" + name});
-                 this.loadBreakCrumb();
                }
                else  if(this.menuItems === MailMenu ){
                  this.$router.push({path: "/mail/" + name});
-                 this.loadBreakCrumb();
                }
 
              }
            },
            topMenuTo(name){
+             this.loadBreakCrumb();
             this.stompClient.send("/welcome",{});
             var vm = this;
             if(name == 'logout') {
@@ -270,10 +256,8 @@
               })
             } else if(name == 'AdminMenu') {
                 this.$router.push({path: '/admin/index'});
-                this.loadBreakCrumb();
             } else if(name == 'MailMenu') {
                 this.$router.push({path: '/mail/index'});
-                this.loadBreakCrumb();
             }
            }
         }
