@@ -2,18 +2,8 @@
 </style>
 <template>
     <div>
-        <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>
-                <Icon type="ivu-icon ivu-icon-person"></Icon>
-                用户管理
-            </BreadcrumbItem>
-            <BreadcrumbItem>角色列表</BreadcrumbItem>
-            <BreadcrumbItem>用户授权</BreadcrumbItem>
-        </Breadcrumb>
-        <Content :style="{padding: '0px 0px', minHeight: '280px', background: '#fff'}">
             <CustomTable ref="customTable" :url="table.url" :query="table.query" :columns="table.columns"  :defaultSort="table.defaultSort" :placeholder="table.placeholder" :tools="table.tools"></CustomTable>
-        </Content>
-        <Modal v-model="modalEdit" title="选择授权用户" width="500">
+         <Modal v-model="modalEdit" title="选择授权用户" width="500">
             <Form ref="formEdit" :model="formEdit"  :label-width="50">
                 <FormItem label="用户" prop="userId">
                     <Select v-model="formEdit.userId"  filterable remote :remote-method="searchUser" :loading="autoSelect.loading">

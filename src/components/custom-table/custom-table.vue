@@ -2,7 +2,7 @@
 	@import 'custom-table.css';
 </style>
 <template>
-	<div>
+	<div style="height:100%">
 	<Row v-if="tools || search">
 		<Col span="12" :style="{padding:'10px 10px'}" v-if="tools">
 		    <Button style="margin-right:5px" v-for="(item,index) in tools" v-if="!item.upload" :key="index" :type="item.color" @click="item.click"><Icon  v-if="item.icon"  :type="item.icon"></Icon> {{item.text}}</Button>
@@ -46,7 +46,7 @@
         </Form>
     </Col>
  </Row>
- <Table border stripe height="355" @on-sort-change="changeSort" :loading="loading" :columns="initColumns" :data="values" size="small" :style="{margin: '0px 10px'}"></Table>
+ <Table border stripe @on-sort-change="changeSort" :height="400" :loading="loading" :columns="initColumns" :data="values" size="small" :style="{margin: '0px 10px'}"></Table>
  <Page :page="page" :styles="{padding: '10px 10px', textAlign: 'right'}" :page-size="pageSize" :page-size-opts="[10, 20, 50, 100]" :current="current" :total="total" show-total show-sizer show-elevator @on-change='changePageNo' @on-page-size-change='changePageSize'></Page>
 </div>
 </template>

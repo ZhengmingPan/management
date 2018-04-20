@@ -10,15 +10,7 @@
 </style>
 <template>
     <div>
-        <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>
-                <Icon type="document-text"></Icon>
-                日志管理
-            </BreadcrumbItem>
-            <BreadcrumbItem>日志列表</BreadcrumbItem>
-        </Breadcrumb>
-        <Content :style="{padding: '0px 0px', minHeight: '280px', background: '#fff'}">
-            <Form ref="formQuery" :model="formQuery" inline> 
+            <Form ref="formQuery" :model="formQuery" inline>
                 <FormItem prop="">
                     <DatePicker clearable type="datetimerange" format="yyyy-MM-dd HH:mm" @on-change="changeDateRange"  placeholder="操作时间范围" style="width: 300px"></DatePicker>
                 </FormItem>
@@ -34,13 +26,13 @@
             <Page :styles="{padding: '10px 10px', textAlign: 'right'}" :page-size="page.pageSize"
                   :page-size-opts="page.pageSizeOpts" :current="page.current" :total="page.total" show-total show-sizer
                   show-elevator @on-change='changePageNo' @on-page-size-change='changePageSize'></Page>
-        </Content> 
+     
     </div>
 </template>
 <script>
     export default {
         data() {
-            return {    
+            return {
                 formQuery: {
                     searchKey: '',
                     startTime: '',
@@ -80,29 +72,29 @@
                         sortable: true
                     }, {
                         title: '路径',
-                        key: 'url', 
+                        key: 'url',
                         width: 400,
                         ellipsis: true,
                         sortable: true
                     }, {
                         title: '类型',
                         key: 'method',
-                        width: 80, 
+                        width: 80,
                         sortable: true
                     }, {
                         title: '响应时间(ms)',
                         key: 'spendTime',
-                        width: 140, 
+                        width: 140,
                         sortable: true
                     }, {
                         title: 'IP地址',
                         key: 'ip',
-                        width: 120, 
+                        width: 120,
                         ellipsis: true,
                         sortable: true
                     }, {
                         title: '操作',
-                        key: 'actions', 
+                        key: 'actions',
                         width: 80,
                         fixed: 'right',
                         align: 'center',
@@ -117,27 +109,27 @@
                                         marginRight: '5px'
                                     },
                                     on: {
-                                        click: () => { 
-                                            this.$Modal.confirm({ 
+                                        click: () => {
+                                            this.$Modal.confirm({
                                                 title: '系统提示',
                                                 content: '确定要删除日志吗？',
-                                                onOk: () => { 
+                                                onOk: () => {
                                                     var _this  = this;
-                                                    this.$http.post('/home/api/log/delete', {id: params.row.id}, function(result) {  
+                                                    this.$http.post('/home/api/log/delete', {id: params.row.id}, function(result) {
                                                         if(result.success) {
                                                             _this.loadData();
                                                             _this.$Message.success('删除日志成功。');
                                                          }
                                                         else {
-                                                            _this.$Message.error({ 
-                                                                content: result.message, 
+                                                            _this.$Message.error({
+                                                                content: result.message,
                                                                 duration: 0,
                                                                 closable: true
-                                                            });  
+                                                            });
                                                         }
                                                     });
                                                 },
-                                                onCancel: () => { 
+                                                onCancel: () => {
                                                 }
                                             });
                                         }
@@ -161,16 +153,16 @@
         created() {
             this.loadData();
         },
-        methods: { 
-            changeDateRange(value) {   
+        methods: {
+            changeDateRange(value) {
                 this.formQuery.startTime = '';
                 this.formQuery.endTime = '';
-                if(value[0] != null && value[0] != undefined) { 
+                if(value[0] != null && value[0] != undefined) {
                     this.formQuery.startTime = value[0];
                 }
                 if(value[1] != null && value[1] != undefined) {
                     this.formQuery.endTime = value[1];
-                } 
+                }
             },
             handleQuery() {
                 this.loadData();

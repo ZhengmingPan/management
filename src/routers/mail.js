@@ -41,6 +41,10 @@ const routers = [{
     }, {
         path: 'protocol',
         component: EmptyParent,
+        meta: {
+          menu: 'protocol',
+          title: '协议管理'
+        },
         children: [{
             path: '',
             meta: {
@@ -66,6 +70,10 @@ const routers = [{
     }, {
         path: 'account',
         component: EmptyParent,
+        meta: {
+          menu: 'account',
+          title: '账户管理'
+        },
         children: [{
             path: '',
             meta: {

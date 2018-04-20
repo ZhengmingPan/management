@@ -1,17 +1,9 @@
 <style scoped>
 </style>
 <template>
-    <div>
-        <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>
-                <Icon type="ivu-icon ivu-icon-person"></Icon>
-                用户管理
-            </BreadcrumbItem>
-            <BreadcrumbItem>用户列表</BreadcrumbItem>
-        </Breadcrumb>
-        <Content :style="{padding: '0px 0px', minHeight: '280px', background: '#fff'}">
+    <div>  
             <CustomTable :highSearch="table.highSearch" ref="customTable" :url="table.url" :query="table.query" :columns="table.columns"  :defaultSort="table.defaultSort" :placeholder="table.placeholder" :tools="table.tools"></CustomTable>
-        </Content>
+
     </div>
 </template>
 <script>

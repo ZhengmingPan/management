@@ -48,8 +48,9 @@ var routers = [{
         path: 'user',
         component: EmptyParent,
         meta: {
+            menu: 'usermanage',
             title: '用户管理'
-        }, 
+        },
         children:[{
             path: '',
             meta: {
@@ -83,6 +84,7 @@ var routers = [{
         path: 'role',
         component: EmptyParent,
         meta: {
+            menu: 'usermanage',
             title: '角色管理'
         },
         children: [{
@@ -125,6 +127,7 @@ var routers = [{
         path: 'config',
         component: EmptyParent,
         meta: {
+            menu: 'config',
             title: '配置项管理'
         },
         children: [{

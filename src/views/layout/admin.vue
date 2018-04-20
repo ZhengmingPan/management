@@ -46,7 +46,7 @@
 </style>
 <template>
   <div class="layout">
-    <Layout  :style="{minHeight: '100vh'}">
+    <Layout :style="{minHeight: '100vh'}">
       <Sider :style="{background: '#495060'}"  collapsible :collapsed-width="73" v-model="isCollapsed">
         <Menu ref="leftMenu" theme="dark" width="auto" @on-select="menuSelect" :active-name="activeName" accordion :open-names="openNames" :class="menuitemClasses">
           <template v-for="item in menuItems">
@@ -83,14 +83,24 @@
       <Layout>
         <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)', height: '59px', padding: '0 20px'}">
           <Menu :active-name="topActiveName" mode="horizontal" @on-select="topMenuTo">
+
+              <Breadcrumb style="float:left;">
+                 <BreadcrumbItem  v-for="item in breakcrumbItems" :key="item.name">
+                   {{item.title}}
+                 </BreadcrumbItem>
+              </Breadcrumb>
+            <!--
             <Breadcrumb style="float:left;">
-                <BreadcrumbItem>
-                    <Icon type="filing"></Icon>
-                    文件管理
-                </BreadcrumbItem>
-                <BreadcrumbItem>文件列表</BreadcrumbItem>
+               <BreadcrumbItem>
+                 <Icon type="home"></Icon>
+                 用户管理
+               </BreadcrumbItem>
+               <BreadcrumbItem>
+                用户列表
+               </BreadcrumbItem>
             </Breadcrumb>
-            <div class="layout-nav">
+            -->
+             <div class="layout-nav">
               <Submenu>
                 <template slot="title">
                     <Icon type="ionic"></Icon> 切换系统
@@ -113,7 +123,7 @@
             </div>
           </Menu>
         </Header>
-        <Content :style="{padding: '0 24px 24px'}">
+        <Content :style="{padding: '20px 20px'}">
           <transition name="move" mode="out-in"><router-view></router-view></transition>
         </Content>
       </Layout>
@@ -131,6 +141,7 @@
     export default {
         data() {
            return {
+              breakcrumbItems: [],
               openNames: [''],
               activeName: '',
               topActiveName: '',
@@ -153,6 +164,7 @@
           this.refresh();
         },
         created() {
+          this.loadBreakCrumb();
           this.refresh();
           var vm = this;
           this.stompClient = Stomp.over(new SockJs('http://localhost:9000/home/homeWs'));
@@ -162,11 +174,9 @@
               console.log("Result:  " + response.body)
             });
           });
-
         },
         methods: {
            refresh() {
-             console.log(this.$route);
             if(this.$route.path.indexOf('/admin/') >= 0) {
                 this.menuItems = AdminMenu;
                 this.topActiveName = 'AdminMenu';
@@ -178,8 +188,7 @@
                this.$refs.leftMenu.updateOpened();
                this.$refs.leftMenu.updateActiveName();
             });
-            let currentPage = !this.$cookie.get('currentPage') ? this.$cookie.get('currentPage') : this.$route.meta.menu;
-            this.$cookie.set('currentPage', currentPage);
+            let currentPage = this.$route.meta.menu;
             let openName = '';
             if(currentPage) {
                 if(currentPage.indexOf('-') >= 0) {
@@ -198,7 +207,6 @@
                   if(result.data == null) {
                     vm.$cookie.clear('token');
                     vm.$cookie.clear('username');
-                    vm.$cookie.clear('currentPage');
                     vm.$router.replace("/login");
                   }
                   vm.username = result.data.name;
@@ -210,6 +218,22 @@
               });
             }
            },
+           loadBreakCrumb() {
+               let matcheds = this.$route.matched;
+               console.log(matcheds);
+               let breakcrumbs = [];
+               for(let index=0;index < matcheds.length; index++) {
+                 if(matcheds[index].meta && matcheds[index].meta.title) {
+                   breakcrumbs.push({
+                     title: matcheds[index].meta.title,
+                     path: matcheds[index].path,
+                     name: matcheds[index].meta.menu + index
+                   })
+                 }
+               }
+              this.breakcrumbItems = breakcrumbs;
+              console.log(this.breakcrumbItems);
+           },
            menuSelect(name) {
              if(name) {
                if(name.indexOf("-") == name.length - 1) {
@@ -220,13 +244,15 @@
                   openName = name.substring(0, name.indexOf("-") + 1);
                   name = name.substring(name.indexOf("-") + 1);
                }
-               this.$cookie.set('currentPage', openName + name);
                if(this.menuItems === AdminMenu ) {
                  this.$router.push({path: "/admin/" + name});
+                 this.loadBreakCrumb();
                }
                else  if(this.menuItems === MailMenu ){
                  this.$router.push({path: "/mail/" + name});
+                 this.loadBreakCrumb();
                }
+
              }
            },
            topMenuTo(name){
@@ -237,7 +263,6 @@
                 if(result.success) {
                   vm.$cookie.set('token', '');
                   vm.$cookie.set('username', '');
-                  vm.$cookie.set('currentPage', 'index');
                   vm.$router.replace("/login");
                 } else {
                   vm.$Message.error(result.message);
@@ -245,8 +270,10 @@
               })
             } else if(name == 'AdminMenu') {
                 this.$router.push({path: '/admin/index'});
+                this.loadBreakCrumb();
             } else if(name == 'MailMenu') {
                 this.$router.push({path: '/mail/index'});
+                this.loadBreakCrumb();
             }
            }
         }

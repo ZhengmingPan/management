@@ -1,18 +1,9 @@
-<style scoped> 
+<style scoped>
 </style>
 <template>
     <div>
-        <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>
-                <Icon type="settings"></Icon>
-                配置管理
-            </BreadcrumbItem>
-            <BreadcrumbItem>配置项列表</BreadcrumbItem>
-        </Breadcrumb>
-        <Content :style="{padding: '0px 0px', minHeight: '280px', background: '#fff'}"> 
             <CustomTable ref="customTable" :url="table.url" :query="table.query" :columns="table.columns"  :defaultSort="table.defaultSort" :placeholder="table.placeholder" :tools="table.tools"></CustomTable>
-        </Content> 
-    </div>
+     </div>
 </template>
 <script>
 
@@ -23,7 +14,7 @@
             CustomTable
         },
         data() {
-            return {    
+            return {
                table: {
                     tools: [{
                         text: '新增',
@@ -34,7 +25,7 @@
                     placeholder: '名称、键',
                     url: '/home/api/config/page',
                     query:{},
-                    defaultSort: ['id', 'desc'], 
+                    defaultSort: ['id', 'desc'],
                     columns: [{
                         type: 'selection',
                         width: 56,
@@ -52,7 +43,7 @@
                         width: 120,
                         sortable: true
                     },{
-                        title: '键', 
+                        title: '键',
                         width: 120,
                         key: 'code',
                         fixed: 'left',
@@ -65,21 +56,21 @@
                     }, {
                         title: '类型',
                         key: 'typeName',
-                        width: 150, 
+                        width: 150,
                         sortable: true
                     }, {
                         title: '参数',
-                        key: 'params',  
+                        key: 'params',
                         width: 400,
                         sortable: true
                     }, {
                         title: '备注',
-                        key: 'remark',  
+                        key: 'remark',
                         width: 400,
                         sortable: true
                     }, {
                         title: '值是否可修改',
-                        key: 'editable', 
+                        key: 'editable',
                         width: 140,
                         fixed: 'right',
                         sortable: true,
@@ -97,7 +88,7 @@
                         }
                     }, {
                         title: '操作',
-                        key: 'actions', 
+                        key: 'actions',
                         width: 150,
                         fixed: 'right',
                         align: 'center',
@@ -112,7 +103,7 @@
                                         marginRight: '5px'
                                     },
                                     on: {
-                                        click: () => { 
+                                        click: () => {
                                              this.$router.push({path: '/admin/config/update', query: {id: params.row.id}});
                                         }
                                     }
@@ -126,27 +117,27 @@
                                         marginRight: '5px'
                                     },
                                     on: {
-                                        click: () => { 
-                                            this.$Modal.confirm({ 
+                                        click: () => {
+                                            this.$Modal.confirm({
                                                 title: '系统提示',
                                                 content: '确定要删除配置项吗？',
-                                                onOk: () => { 
+                                                onOk: () => {
                                                     var _this  = this;
-                                                    this.$http.post('/home/api/config/delete', {id: params.row.id}, function(result) {  
+                                                    this.$http.post('/home/api/config/delete', {id: params.row.id}, function(result) {
                                                         if(result.success) {
                                                             _this.$refs['customTable'].reload();
                                                             _this.$Message.success('删除配置项成功。');
                                                          }
                                                         else {
-                                                            _this.$Message.error({ 
-                                                                content: result.message, 
+                                                            _this.$Message.error({
+                                                                content: result.message,
                                                                 duration: 0,
                                                                 closable: true
-                                                            });  
+                                                            });
                                                         }
                                                     });
                                                 },
-                                                onCancel: () => { 
+                                                onCancel: () => {
                                                 }
                                             });
                                         }
@@ -154,13 +145,13 @@
                                 }, '删除')
                             ]);
                         }
-                    }] 
-                } 
+                    }]
+                }
             };
         },
-        created() { 
+        created() {
         },
-        methods: {   
+        methods: {
         }
     };
 </script>

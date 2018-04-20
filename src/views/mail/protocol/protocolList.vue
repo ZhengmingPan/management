@@ -2,16 +2,8 @@
 </style>
 <template>
     <div>
-        <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>
-                <Icon type="settings"></Icon>
-                协议管理
-            </BreadcrumbItem>
-            <BreadcrumbItem>协议列表</BreadcrumbItem>
-        </Breadcrumb>
-        <Content :style="{padding: '0px 0px', minHeight: '280px', background: '#fff'}">
             <CustomTable ref="customTable" :url="table.url" :query="table.query" :columns="table.columns"  :defaultSort="table.defaultSort" :placeholder="table.placeholder" :tools="table.tools"></CustomTable>
-        </Content>
+
     </div>
 </template>
 <script>
@@ -84,7 +76,7 @@
                     }, {
                         title: '操作',
                         key: 'actions',
-                        width: 180,
+                        width: 290,
                         fixed: 'right',
                         align: 'center',
                         render: (h, params) => {

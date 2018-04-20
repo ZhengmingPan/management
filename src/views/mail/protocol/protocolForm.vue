@@ -10,15 +10,6 @@
 </style>
 <template>
     <div>
-        <Breadcrumb :style="{margin: '24px 0'}">
-           <BreadcrumbItem>
-                <Icon type="settings"></Icon>
-                协议管理
-            </BreadcrumbItem>
-            <BreadcrumbItem>协议列表</BreadcrumbItem>
-            <BreadcrumbItem>编辑协议信息</BreadcrumbItem>
-        </Breadcrumb>
-        <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
             <Form ref="formEdit" :model="formEdit" :rules="ruleEdit" :label-width="80">
                 <FormItem label="名称" prop="name">
                     <Input type="text" v-model="formEdit.name" placeholder="名称"></Input>
@@ -46,8 +37,7 @@
                     &nbsp;&nbsp;
                     <Button type="primary" :loading="loading" @click="handleSubmit('formEdit')">保存</Button>
                 </FormItem>
-            </Form>
-        </Content>
+            </Form> 
     </div>
 </template>
 <script>

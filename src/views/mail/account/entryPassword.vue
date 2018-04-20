@@ -10,15 +10,6 @@
 </style>
 <template>
     <div>
-        <Breadcrumb :style="{margin: '24px 0'}">
-           <BreadcrumbItem>
-                <Icon type="ivu-icon ivu-icon-person"></Icon>
-                账户管理
-            </BreadcrumbItem>
-            <BreadcrumbItem>账户列表</BreadcrumbItem>
-            <BreadcrumbItem>重置密码</BreadcrumbItem>
-        </Breadcrumb>
-        <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
             <Form ref="formEdit" :model="formEdit" :rules="ruleEdit" :label-width="80">
                 <FormItem label="姓名" prop="name">
                     <Input type="text" readonly v-model="formEdit.name"></Input>
@@ -37,8 +28,7 @@
                     &nbsp;&nbsp;
                     <Button type="primary" :loading="loading" @click="handleSubmit('formEdit')">保存</Button>
                 </FormItem>
-            </Form>
-        </Content>
+            </Form> 
     </div>
 </template>
 <script>

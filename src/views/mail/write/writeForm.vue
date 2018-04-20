@@ -2,15 +2,8 @@
 </style>
 <template>
     <div>
-        <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>
-                <Icon type="edit"></Icon>
-                写信
-            </BreadcrumbItem>
-        </Breadcrumb>
-        <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
           <Wangeditor v-model="content" ref="editor" @load="uploadImgSuccess" @change="contentChange" :id="editor.id" :menus="editor.menus" :mapKey="editor.mapKey" :uploadImgUrl="editor.uploadImgUrl" :width="editor.width"></Wangeditor>
-         </Content>
+
     </div>
 </template>
 <script>

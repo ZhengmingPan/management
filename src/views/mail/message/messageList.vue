@@ -2,20 +2,6 @@
 </style>
 <template>
     <div>
-        <Breadcrumb v-if="!inbox" :style="{margin: '24px 0'}">
-            <BreadcrumbItem>
-                <Icon type="ivu-icon ivu-icon-person"></Icon>
-                账户管理
-            </BreadcrumbItem>
-            <BreadcrumbItem>邮件列表</BreadcrumbItem> 
-        </Breadcrumb>
-        <Breadcrumb v-if="inbox" :style="{margin: '24px 0'}">
-            <BreadcrumbItem>
-                <Icon type="filing"></Icon>
-                收件箱
-            </BreadcrumbItem> 
-        </Breadcrumb>
-        <Content :style="{padding: '0px 0px', minHeight: '280px', background: '#fff'}">
             <CustomTable :highSearch="table.highSearch" ref="customTable" :url="table.url" :query="table.query" :columns="table.columns"  :defaultSort="table.defaultSort" :placeholder="table.placeholder" :tools="table.tools"></CustomTable>
             <Modal v-model="modalEdit" title="导入" width="500">
                 <Form :label-width="50">
@@ -28,7 +14,6 @@
                   <Button type="primary" :loading="saveLoading" @click="confirmImport">保存</Button>
                 </div>
             </Modal> 
-        </Content>
     </div>
 </template>
 <script>
@@ -59,7 +44,7 @@
                   this.modalEdit = true;
                 }
             });
-            return { 
+            return {
                 inbox: !this.$route.query.id,
                 modalEdit:false,
                 plainPassword: '',
@@ -135,7 +120,7 @@
                                         marginRight: '5px'
                                     },
                                     on: {
-                                        click: () => {  
+                                        click: () => {
                                             this.$router.push({path: '/mail/account/messages/detail', query: {id: params.row.id}})
                                         }
                                     }
@@ -143,7 +128,7 @@
                                 h('Button', {
                                     props: {
                                         type: 'error',
-                                        size: 'small' 
+                                        size: 'small'
                                     },
                                     style: {
                                         marginRight: '5px'

@@ -10,15 +10,6 @@
 </style>
 <template>
     <div>
-        <Breadcrumb :style="{margin: '24px 0'}">
-           <BreadcrumbItem>
-                <Icon type="ivu-icon ivu-icon-person"></Icon>
-                用户管理
-            </BreadcrumbItem>
-            <BreadcrumbItem>用户列表</BreadcrumbItem>
-            <BreadcrumbItem>编辑用户信息</BreadcrumbItem>
-        </Breadcrumb>
-        <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
             <Form ref="formEdit" :model="formEdit" :rules="ruleEdit" :label-width="80">
                 <Row>
                     <Col span="12">
@@ -71,8 +62,7 @@
                     &nbsp;&nbsp;
                     <Button type="primary" :loading="loading" @click="handleSubmit('formEdit')">保存</Button>
                 </FormItem>
-            </Form>
-        </Content>
+            </Form> 
     </div>
 </template>
 <script>
