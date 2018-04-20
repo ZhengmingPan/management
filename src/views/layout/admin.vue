@@ -152,7 +152,6 @@
           this.refresh();
         },
         created() {
-          this.loadBreakCrumb();
           this.refresh();
           var vm = this;
           this.stompClient = Stomp.over(new SockJs('http://localhost:9000/home/homeWs'));
@@ -162,6 +161,7 @@
               console.log("Result:  " + response.body)
             });
           });
+          this.loadBreakCrumb();
         },
         methods: {
            refresh() {
@@ -221,7 +221,6 @@
               this.breakcrumbItems = breakcrumbs;
            },
            menuSelect(name) {
-             this.loadBreakCrumb();
              if(name) {
                if(name.indexOf("-") == name.length - 1) {
                  return false;
@@ -237,7 +236,7 @@
                else  if(this.menuItems === MailMenu ){
                  this.$router.push({path: "/mail/" + name});
                }
-
+               this.loadBreakCrumb();
              }
            },
            topMenuTo(name){
@@ -259,6 +258,7 @@
             } else if(name == 'MailMenu') {
                 this.$router.push({path: '/mail/index'});
             }
+            this.loadBreakCrumb();
            }
         }
     }
